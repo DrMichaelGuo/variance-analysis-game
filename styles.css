@@ -1,4 +1,4 @@
-/* Apple-inspired CSS for Escape the Variance Vault */
+/* Escape Room Design for Variance Vault */
 
 * {
     margin: 0;
@@ -7,184 +7,359 @@
 }
 
 :root {
-    --primary-blue: #007AFF;
-    --primary-blue-hover: #0056CC;
-    --secondary-gray: #8E8E93;
-    --background-gray: #F2F2F7;
-    --card-background: #FFFFFF;
-    --text-primary: #1D1D1F;
-    --text-secondary: #86868B;
-    --success-green: #34C759;
-    --error-red: #FF3B30;
-    --border-color: #D1D1D6;
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.15);
+    /* Escape Room Color Palette */
+    --dark-bg: #1a1a1a;
+    --darker-bg: #0f0f0f;
+    --vault-gold: #d4af37;
+    --vault-gold-hover: #b8941f;
+    --danger-red: #ff4444;
+    --success-green: #00ff88;
+    --warning-orange: #ff8800;
+    --steel-blue: #4a90e2;
+    --steel-gray: #2c3e50;
+    --light-gray: #ecf0f1;
+    --text-light: #ffffff;
+    --text-muted: #bdc3c7;
+    --accent-purple: #8e44ad;
+    --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.3);
+    --border-glow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--background-gray);
-    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    color: var(--text-light);
     line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Animated background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(74, 144, 226, 0.1) 0%, transparent 50%);
+    animation: backgroundShift 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
 }
 
 .screen {
     display: none;
     min-height: 100vh;
     padding: 20px;
+    position: relative;
 }
 
 .screen.active {
     display: block;
+    animation: screenFadeIn 0.8s ease-out;
+}
+
+@keyframes screenFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px;
+    position: relative;
 }
 
 /* Typography */
 .title {
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 3.5rem;
+    font-weight: bold;
     text-align: center;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary-blue), #5856D6);
+    background: linear-gradient(45deg, var(--vault-gold), var(--warning-orange), var(--vault-gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
 }
 
 .subtitle {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
+    font-size: 1.4rem;
+    color: var(--text-muted);
     text-align: center;
     margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .room-subtitle {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: var(--vault-gold);
     text-align: center;
     margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Cards */
+/* Cards with Escape Room Theme */
 .intro-card, .scenario-card, .data-panel, .calculation-panel, .summary-card, .formula-card {
-    background: var(--card-background);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(145deg, var(--steel-gray), var(--dark-bg));
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-dark);
+    border: 2px solid var(--vault-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.intro-card::before, .scenario-card::before, .data-panel::before, .calculation-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--vault-gold), transparent);
+    animation: scanLine 3s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
 .intro-card h2, .scenario-card h2, .data-panel h3, .calculation-panel h3, .summary-card h2, .formula-card h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: var(--vault-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Variance Analysis Highlight Section */
+.variance-highlight {
+    background: linear-gradient(135deg, var(--steel-blue), var(--accent-purple));
+    border-radius: 16px;
+    padding: 40px;
+    margin: 30px 0;
+    text-align: center;
+    box-shadow: var(--shadow-glow);
+    border: 3px solid var(--vault-gold);
+    position: relative;
+}
+
+.variance-highlight::before {
+    content: '📊';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    background: var(--dark-bg);
+    padding: 10px 20px;
+    border-radius: 50%;
+    border: 3px solid var(--vault-gold);
+}
+
+.variance-highlight h2 {
+    color: var(--text-light);
+    font-size: 2.2rem;
     margin-bottom: 1rem;
-    color: var(--text-primary);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 
-.room-list {
-    list-style: none;
-    margin-top: 1rem;
+.variance-highlight p {
+    font-size: 1.2rem;
+    color: var(--light-gray);
+    line-height: 1.8;
 }
 
-.room-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border-color);
+.variance-skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.skill-item {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--vault-gold);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+
+.skill-item h4 {
+    color: var(--vault-gold);
+    margin-bottom: 10px;
     font-size: 1.1rem;
 }
 
-.room-list li:last-child {
-    border-bottom: none;
+/* Room List */
+.room-list {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+.room-list li {
+    padding: 20px;
+    border: 2px solid var(--steel-gray);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--darker-bg), var(--dark-bg));
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.room-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--vault-gold);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.room-list li:hover {
+    border-color: var(--vault-gold);
+    box-shadow: var(--border-glow);
+    transform: translateX(10px);
+}
+
+.room-list li:hover::before {
+    transform: scaleY(1);
 }
 
 /* Room Header */
 .room-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
 }
 
 .room-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: bold;
     margin-bottom: 1rem;
+    color: var(--vault-gold);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 /* Progress Bar */
 .progress-bar {
     width: 100%;
-    height: 8px;
-    background-color: var(--border-color);
-    border-radius: 4px;
+    height: 12px;
+    background: var(--steel-gray);
+    border-radius: 6px;
     overflow: hidden;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
+    border: 1px solid var(--vault-gold);
 }
 
 .progress {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-blue), #5856D6);
-    border-radius: 4px;
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, var(--vault-gold), var(--warning-orange));
+    border-radius: 6px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
 /* Data Grid */
 .data-grid {
     display: grid;
-    gap: 16px;
-    margin-top: 1rem;
+    gap: 20px;
+    margin-top: 1.5rem;
 }
 
 .data-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    background: var(--background-gray);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+    padding: 20px;
+    background: linear-gradient(135deg, var(--darker-bg), var(--steel-gray));
+    border-radius: 10px;
+    border: 1px solid var(--vault-gold);
+    transition: all 0.3s ease;
+}
+
+.data-item:hover {
+    border-color: var(--warning-orange);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
 }
 
 .data-item .label {
-    font-weight: 500;
-    color: var(--text-primary);
+    font-weight: bold;
+    color: var(--text-light);
+    font-size: 1.1rem;
 }
 
 .data-item .value {
-    font-weight: 600;
-    color: var(--primary-blue);
-    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--vault-gold);
+    font-size: 1.3rem;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
 }
 
 /* Input Groups */
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .input-group label {
     display: block;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: var(--text-primary);
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--vault-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .input-group input, .input-group select {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    font-size: 1rem;
-    background: var(--card-background);
-    transition: border-color 0.2s ease;
-    margin-bottom: 8px;
+    padding: 15px 18px;
+    border: 2px solid var(--steel-gray);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background: var(--darker-bg);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
 }
 
 .input-group input:focus, .input-group select:focus {
     outline: none;
-    border-color: var(--primary-blue);
+    border-color: var(--vault-gold);
+    box-shadow: var(--border-glow);
+    background: var(--dark-bg);
 }
 
 .input-group select {
@@ -194,68 +369,98 @@ body {
 /* Buttons */
 .primary-btn, .secondary-btn {
     display: inline-block;
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 18px 40px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     border: none;
-    transition: all 0.2s ease;
-    margin: 8px;
+    transition: all 0.3s ease;
+    margin: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
 }
 
 .primary-btn {
-    background: linear-gradient(135deg, var(--primary-blue), #5856D6);
-    color: white;
-    box-shadow: var(--shadow);
+    background: linear-gradient(135deg, var(--vault-gold), var(--warning-orange));
+    color: var(--darker-bg);
+    box-shadow: var(--shadow-dark);
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
 }
 
 .primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+}
+
+.primary-btn:hover::before {
+    left: 100%;
 }
 
 .secondary-btn {
-    background: var(--card-background);
-    color: var(--primary-blue);
-    border: 2px solid var(--primary-blue);
+    background: transparent;
+    color: var(--vault-gold);
+    border: 2px solid var(--vault-gold);
 }
 
 .secondary-btn:hover {
-    background: var(--primary-blue);
-    color: white;
-    transform: translateY(-2px);
+    background: var(--vault-gold);
+    color: var(--darker-bg);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
 }
 
 /* Feedback */
 .feedback {
-    margin-top: 1rem;
-    padding: 16px;
-    border-radius: 12px;
-    font-weight: 500;
+    margin-top: 1.5rem;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
     text-align: center;
     transition: all 0.3s ease;
+    border: 2px solid;
+    animation: feedbackSlide 0.5s ease-out;
+}
+
+@keyframes feedbackSlide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .feedback.success {
-    background: rgba(52, 199, 89, 0.1);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.2));
     color: var(--success-green);
-    border: 2px solid var(--success-green);
+    border-color: var(--success-green);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
 }
 
 .feedback.error {
-    background: rgba(255, 59, 48, 0.1);
-    color: var(--error-red);
-    border: 2px solid var(--error-red);
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 68, 68, 0.2));
+    color: var(--danger-red);
+    border-color: var(--danger-red);
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
 }
 
 /* Summary Sections */
 .summary-section {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--steel-gray);
+    position: relative;
 }
 
 .summary-section:last-child {
@@ -264,71 +469,99 @@ body {
 }
 
 .summary-section h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--vault-gold);
+    text-transform: uppercase;
 }
 
 .summary-section p {
-    margin: 0.5rem 0;
-    font-size: 1rem;
+    margin: 0.8rem 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.summary-section strong {
+    color: var(--text-light);
 }
 
 /* Completion Actions */
 .completion-actions {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 /* Formula Cards */
 .formula-card p {
-    margin: 0.75rem 0;
-    font-size: 1rem;
-    line-height: 1.5;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
 }
 
 .formula-card strong {
-    color: var(--primary-blue);
+    color: var(--vault-gold);
+}
+
+/* Lock Animation */
+.lock-animation {
+    font-size: 4rem;
+    animation: lockSpin 2s ease-in-out infinite;
+    margin: 20px 0;
+}
+
+@keyframes lockSpin {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 20px 10px;
+        padding: 20px 15px;
     }
     
     .title {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
     }
     
     .room-header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .data-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
     }
     
     .data-item .value {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     
     .primary-btn, .secondary-btn {
         width: 100%;
-        margin: 8px 0;
+        margin: 10px 0;
+    }
+    
+    .room-list li {
+        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 480px) {
     .title {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .intro-card, .scenario-card, .data-panel, .calculation-panel, .summary-card, .formula-card {
-        padding: 16px;
-        margin-bottom: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .variance-highlight {
+        padding: 25px;
     }
 }
