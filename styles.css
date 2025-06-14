@@ -107,6 +107,18 @@ body::before {
     letter-spacing: 2px;
 }
 
+.highlight-text {
+    color: var(--vault-gold);
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    from { text-shadow: 0 0 10px rgba(212, 175, 55, 0.6); }
+    to { text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(255, 215, 0, 0.4); }
+}
+
 .room-subtitle {
     font-size: 1rem;
     color: var(--vault-gold);
