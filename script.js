@@ -84,12 +84,27 @@ function showFeedback(elementId, isCorrect, message) {
     feedbackElement.textContent = message;
     feedbackElement.style.display = 'block';
     
-    // Hide feedback after 3 seconds if incorrect, keep if correct
-    if (!isCorrect) {
-        setTimeout(() => {
-            feedbackElement.style.display = 'none';
-        }, 3000);
+    // Keep success feedback visible, but don't auto-hide error feedback anymore
+    // Error feedback will be hidden when user starts typing
+}
+
+// Function to hide feedback when user starts typing
+function hideFeedbackOnInput(feedbackId) {
+    const feedbackElement = document.getElementById(feedbackId);
+    if (feedbackElement && feedbackElement.classList.contains('error')) {
+        feedbackElement.style.display = 'none';
     }
+}
+
+// Function to add input listeners for hiding feedback
+function addFeedbackListeners(roomInputs, feedbackId) {
+    roomInputs.forEach(inputId => {
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) {
+            inputElement.addEventListener('input', () => hideFeedbackOnInput(feedbackId));
+            inputElement.addEventListener('change', () => hideFeedbackOnInput(feedbackId));
+        }
+    });
 }
 
 function validateInputs(inputs) {
@@ -312,6 +327,35 @@ function checkSalesRoom() {
 document.addEventListener('DOMContentLoaded', function() {
     // Set initial screen
     showScreen('welcome-screen');
+    
+    // Set up feedback listeners for each room
+    addFeedbackListeners([
+        'material-price-variance', 
+        'material-price-variance-type', 
+        'material-usage-variance', 
+        'material-usage-variance-type'
+    ], 'materials-feedback');
+    
+    addFeedbackListeners([
+        'labour-rate-variance', 
+        'labour-rate-variance-type', 
+        'labour-efficiency-variance', 
+        'labour-efficiency-variance-type'
+    ], 'labour-feedback');
+    
+    addFeedbackListeners([
+        'variable-overhead-variance', 
+        'variable-overhead-variance-type', 
+        'fixed-overhead-variance', 
+        'fixed-overhead-variance-type'
+    ], 'overhead-feedback');
+    
+    addFeedbackListeners([
+        'sales-price-variance', 
+        'sales-price-variance-type', 
+        'sales-volume-variance', 
+        'sales-volume-variance-type'
+    ], 'sales-feedback');
     
     // Add keyboard support for Enter key
     document.addEventListener('keypress', function(e) {
