@@ -76,6 +76,13 @@ function showScreen(screenId) {
     });
     document.getElementById(screenId).classList.add('active');
     gameState.currentRoom = screenId;
+    
+    // Scroll to top of page when changing screens
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
 }
 
 function showFeedback(elementId, isCorrect, message) {
