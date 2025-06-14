@@ -27,7 +27,7 @@
 }
 
 body {
-    font-family: 'Orbitron', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+    font-family: 'Rajdhani', 'Roboto', sans-serif;
     background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
     color: var(--text-light);
     line-height: 1.6;
@@ -91,6 +91,8 @@ body::before {
     background-clip: text;
     text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
     animation: titlePulse 3s ease-in-out infinite;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    letter-spacing: 2px;
 }
 
 @keyframes titlePulse {
@@ -104,7 +106,9 @@ body::before {
     text-align: center;
     margin-bottom: 2rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
 }
 
 .highlight-text {
@@ -126,6 +130,23 @@ body::before {
     margin-top: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+/* Room Header */
+.room-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.room-header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--vault-gold);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    letter-spacing: 2px;
 }
 
 /* Cards with Escape Room Theme */
@@ -163,6 +184,26 @@ body::before {
     color: var(--vault-gold);
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+}
+
+/* Scenario text styling */
+.scenario-card p {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+    font-weight: 400;
+}
+
+.intro-card p {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+    font-weight: 400;
 }
 
 /* Variance Analysis Highlight Section */
@@ -241,11 +282,15 @@ body::before {
     border: 2px solid var(--steel-gray);
     border-radius: 10px;
     margin-bottom: 15px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     background: linear-gradient(90deg, var(--darker-bg), var(--dark-bg));
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
 }
 
 .room-list li::before {
@@ -268,21 +313,6 @@ body::before {
 
 .room-list li:hover::before {
     transform: scaleY(1);
-}
-
-/* Room Header */
-.room-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    position: relative;
-}
-
-.room-header h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: var(--vault-gold);
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 /* Progress Bar */
@@ -328,10 +358,13 @@ body::before {
 }
 
 .data-item .label {
-    font-weight: bold;
+    font-weight: 600;
     color: var(--text-light);
     font-size: 0.9rem;
     margin-bottom: 8px;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .data-item .value {
@@ -339,6 +372,7 @@ body::before {
     color: var(--vault-gold);
     font-size: 1.2rem;
     text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
 }
 
 /* Calculation Panel - Two Column Layout */
@@ -356,12 +390,13 @@ body::before {
 
 .input-group label {
     display: block;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 8px;
     color: var(--vault-gold);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-size: 0.9rem;
+    font-family: 'Rajdhani', sans-serif;
 }
 
 .input-group input, .input-group select {
@@ -374,7 +409,9 @@ body::before {
     color: var(--text-light);
     transition: all 0.3s ease;
     margin-bottom: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .input-group input:focus, .input-group select:focus {
@@ -498,11 +535,11 @@ body::before {
     transition: all 0.4s ease;
     margin: 10px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     position: relative;
     overflow: hidden;
-    font-family: 'Courier New', monospace;
-    box-shadow: var(--shadow-dark);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
 }
 
 .primary-btn {
