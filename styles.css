@@ -27,7 +27,7 @@
 }
 
 body {
-    font-family: 'Courier New', monospace;
+    font-family: 'Orbitron', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
     background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
     color: var(--text-light);
     line-height: 1.6;
