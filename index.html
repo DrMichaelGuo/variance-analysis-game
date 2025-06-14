@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape the Variance Vault</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="container">
+            <h1 class="title">🔐 Escape the Variance Vault</h1>
+            <p class="subtitle">Master UK accounting variance analysis to unlock each room</p>
+            <div class="intro-card">
+                <h2>Your Mission</h2>
+                <p>You're trapped in a vault with four rooms. Each room focuses on a different variance analysis topic. Calculate the correct variances to unlock the next room and escape!</p>
+                <ul class="room-list">
+                    <li>🏭 Materials Room - Price & Usage Variances</li>
+                    <li>👷 Labour Room - Rate & Efficiency Variances</li>
+                    <li>⚙️ Overhead Room - Variable & Fixed Overhead Variances</li>
+                    <li>📊 Sales Room - Price & Volume Contribution Variances</li>
+                </ul>
+            </div>
+            <button class="primary-btn" onclick="startGame()">Enter the Vault</button>
+        </div>
+    </div>
+
+    <!-- Materials Room -->
+    <div id="materials-room" class="screen">
+        <div class="container">
+            <div class="room-header">
+                <h1>🏭 Materials Room</h1>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 25%"></div>
+                </div>
+                <p class="room-subtitle">Room 1 of 4</p>
+            </div>
+            
+            <div class="scenario-card">
+                <h2>Scenario</h2>
+                <p>British Manufacturing Ltd produces widgets. You need to analyse the material variances for March 2025. The company uses aluminium sheets as their primary raw material.</p>
+            </div>
+
+            <div class="data-panel">
+                <h3>Given Data</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="label">Standard Price per kg:</span>
+                        <span class="value">£8.00</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Price per kg:</span>
+                        <span class="value">£8.50</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Standard Quantity for actual output:</span>
+                        <span class="value">1,200 kg</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Quantity used:</span>
+                        <span class="value">1,250 kg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-panel">
+                <h3>Calculate the Variances</h3>
+                <div class="input-group">
+                    <label for="material-price-variance">Material Price Variance (£):</label>
+                    <input type="number" id="material-price-variance" placeholder="Enter amount" step="0.01">
+                    <select id="material-price-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="material-usage-variance">Material Usage Variance (£):</label>
+                    <input type="number" id="material-usage-variance" placeholder="Enter amount" step="0.01">
+                    <select id="material-usage-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="checkMaterialsRoom()">Submit Answers</button>
+                <div id="materials-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Labour Room -->
+    <div id="labour-room" class="screen">
+        <div class="container">
+            <div class="room-header">
+                <h1>👷 Labour Room</h1>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%"></div>
+                </div>
+                <p class="room-subtitle">Room 2 of 4</p>
+            </div>
+            
+            <div class="scenario-card">
+                <h2>Scenario</h2>
+                <p>Celtic Crafts Ltd employs skilled craftspeople to make traditional Scottish products. Analyse the labour variances for the production department in March 2025.</p>
+            </div>
+
+            <div class="data-panel">
+                <h3>Given Data</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="label">Standard Rate per hour:</span>
+                        <span class="value">£15.00</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Rate per hour:</span>
+                        <span class="value">£14.20</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Standard Hours for actual output:</span>
+                        <span class="value">800 hours</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Hours worked:</span>
+                        <span class="value">850 hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-panel">
+                <h3>Calculate the Variances</h3>
+                <div class="input-group">
+                    <label for="labour-rate-variance">Labour Rate Variance (£):</label>
+                    <input type="number" id="labour-rate-variance" placeholder="Enter amount" step="0.01">
+                    <select id="labour-rate-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="labour-efficiency-variance">Labour Efficiency Variance (£):</label>
+                    <input type="number" id="labour-efficiency-variance" placeholder="Enter amount" step="0.01">
+                    <select id="labour-efficiency-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="checkLabourRoom()">Submit Answers</button>
+                <div id="labour-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overhead Room -->
+    <div id="overhead-room" class="screen">
+        <div class="container">
+            <div class="room-header">
+                <h1>⚙️ Overhead Room</h1>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%"></div>
+                </div>
+                <p class="room-subtitle">Room 3 of 4</p>
+            </div>
+            
+            <div class="scenario-card">
+                <h2>Scenario</h2>
+                <p>Yorkshire Engineering Ltd operates a machine shop. Analyse the overhead variances for March 2025. The company absorbs overheads based on machine hours.</p>
+            </div>
+
+            <div class="data-panel">
+                <h3>Given Data</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="label">Budgeted Fixed Overhead:</span>
+                        <span class="value">£24,000</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Fixed Overhead:</span>
+                        <span class="value">£25,200</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Budgeted Machine Hours:</span>
+                        <span class="value">2,000 hours</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Standard Hours for actual output:</span>
+                        <span class="value">1,900 hours</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Variable Overhead Rate per hour:</span>
+                        <span class="value">£6.00</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Variable Overhead:</span>
+                        <span class="value">£11,780</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-panel">
+                <h3>Calculate the Variances</h3>
+                <div class="input-group">
+                    <label for="variable-overhead-variance">Variable Overhead Variance (£):</label>
+                    <input type="number" id="variable-overhead-variance" placeholder="Enter amount" step="0.01">
+                    <select id="variable-overhead-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="fixed-overhead-variance">Fixed Overhead Volume Variance (£):</label>
+                    <input type="number" id="fixed-overhead-variance" placeholder="Enter amount" step="0.01">
+                    <select id="fixed-overhead-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="checkOverheadRoom()">Submit Answers</button>
+                <div id="overhead-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Room -->
+    <div id="sales-room" class="screen">
+        <div class="container">
+            <div class="room-header">
+                <h1>📊 Sales Room</h1>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 100%"></div>
+                </div>
+                <p class="room-subtitle">Room 4 of 4</p>
+            </div>
+            
+            <div class="scenario-card">
+                <h2>Scenario</h2>
+                <p>London Luxury Ltd sells premium handbags. Analyse the sales variances for March 2025 to understand performance against budget.</p>
+            </div>
+
+            <div class="data-panel">
+                <h3>Given Data</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="label">Budgeted Selling Price per unit:</span>
+                        <span class="value">£120.00</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Selling Price per unit:</span>
+                        <span class="value">£115.00</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Budgeted Sales Volume:</span>
+                        <span class="value">500 units</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Actual Sales Volume:</span>
+                        <span class="value">520 units</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="label">Standard Contribution per unit:</span>
+                        <span class="value">£45.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-panel">
+                <h3>Calculate the Variances</h3>
+                <div class="input-group">
+                    <label for="sales-price-variance">Sales Price Variance (£):</label>
+                    <input type="number" id="sales-price-variance" placeholder="Enter amount" step="0.01">
+                    <select id="sales-price-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="sales-volume-variance">Sales Volume Contribution Variance (£):</label>
+                    <input type="number" id="sales-volume-variance" placeholder="Enter amount" step="0.01">
+                    <select id="sales-volume-variance-type">
+                        <option value="">Select</option>
+                        <option value="adverse">Adverse</option>
+                        <option value="favourable">Favourable</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="checkSalesRoom()">Submit Answers</button>
+                <div id="sales-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completion-screen" class="screen">
+        <div class="container">
+            <h1 class="title">🎉 Congratulations!</h1>
+            <p class="subtitle">You've successfully escaped the Variance Vault!</p>
+            
+            <div class="summary-card">
+                <h2>Variance Analysis Summary</h2>
+                <div class="summary-section">
+                    <h3>🏭 Materials Room</h3>
+                    <p><strong>Material Price Variance:</strong> £625.00 Adverse</p>
+                    <p><strong>Material Usage Variance:</strong> £400.00 Adverse</p>
+                </div>
+                <div class="summary-section">
+                    <h3>👷 Labour Room</h3>
+                    <p><strong>Labour Rate Variance:</strong> £680.00 Favourable</p>
+                    <p><strong>Labour Efficiency Variance:</strong> £750.00 Adverse</p>
+                </div>
+                <div class="summary-section">
+                    <h3>⚙️ Overhead Room</h3>
+                    <p><strong>Variable Overhead Variance:</strong> £380.00 Adverse</p>
+                    <p><strong>Fixed Overhead Volume Variance:</strong> £1,200.00 Adverse</p>
+                </div>
+                <div class="summary-section">
+                    <h3>📊 Sales Room</h3>
+                    <p><strong>Sales Price Variance:</strong> £2,600.00 Adverse</p>
+                    <p><strong>Sales Volume Contribution Variance:</strong> £900.00 Favourable</p>
+                </div>
+            </div>
+            
+            <div class="completion-actions">
+                <button class="primary-btn" onclick="restartGame()">Play Again</button>
+                <button class="secondary-btn" onclick="showFormulas()">View Formulas</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formula Reference -->
+    <div id="formula-screen" class="screen">
+        <div class="container">
+            <h1>📚 Variance Analysis Formulas</h1>
+            <div class="formula-card">
+                <h2>Materials Variances</h2>
+                <p><strong>Material Price Variance:</strong> (Actual Price - Standard Price) × Actual Quantity</p>
+                <p><strong>Material Usage Variance:</strong> (Actual Quantity - Standard Quantity) × Standard Price</p>
+            </div>
+            <div class="formula-card">
+                <h2>Labour Variances</h2>
+                <p><strong>Labour Rate Variance:</strong> (Actual Rate - Standard Rate) × Actual Hours</p>
+                <p><strong>Labour Efficiency Variance:</strong> (Actual Hours - Standard Hours) × Standard Rate</p>
+            </div>
+            <div class="formula-card">
+                <h2>Overhead Variances</h2>
+                <p><strong>Variable Overhead Variance:</strong> Actual Variable Overhead - (Standard Hours × Variable Rate)</p>
+                <p><strong>Fixed Overhead Volume Variance:</strong> (Standard Hours - Budgeted Hours) × Fixed Rate per Hour</p>
+            </div>
+            <div class="formula-card">
+                <h2>Sales Variances</h2>
+                <p><strong>Sales Price Variance:</strong> (Actual Price - Standard Price) × Actual Volume</p>
+                <p><strong>Sales Volume Contribution Variance:</strong> (Actual Volume - Budgeted Volume) × Standard Contribution</p>
+            </div>
+            <button class="secondary-btn" onclick="hideFormulas()">Back to Summary</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
