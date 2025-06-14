@@ -96,25 +96,29 @@
 
             <div class="calculation-panel">
                 <h3>Calculate the Variances</h3>
-                <div class="input-group">
-                    <label for="material-price-variance">Material Price Variance (£):</label>
-                    <input type="number" id="material-price-variance" placeholder="Enter amount" step="0.01">
-                    <select id="material-price-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
+                <div class="calculation-grid">
+                    <div class="input-group">
+                        <label for="material-price-variance">Material Price Variance (£):</label>
+                        <input type="number" id="material-price-variance" placeholder="Enter amount" step="0.01">
+                        <select id="material-price-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="material-usage-variance">Material Usage Variance (£):</label>
+                        <input type="number" id="material-usage-variance" placeholder="Enter amount" step="0.01">
+                        <select id="material-usage-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="submit-section">
+                        <button class="primary-btn" onclick="checkMaterialsRoom()">Submit Answers</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="material-usage-variance">Material Usage Variance (£):</label>
-                    <input type="number" id="material-usage-variance" placeholder="Enter amount" step="0.01">
-                    <select id="material-usage-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
-                </div>
-                <button class="primary-btn" onclick="checkMaterialsRoom()">Submit Answers</button>
                 <div id="materials-feedback" class="feedback"></div>
             </div>
         </div>
@@ -160,25 +164,29 @@
 
             <div class="calculation-panel">
                 <h3>Calculate the Variances</h3>
-                <div class="input-group">
-                    <label for="labour-rate-variance">Labour Rate Variance (£):</label>
-                    <input type="number" id="labour-rate-variance" placeholder="Enter amount" step="0.01">
-                    <select id="labour-rate-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
+                <div class="calculation-grid">
+                    <div class="input-group">
+                        <label for="labour-rate-variance">Labour Rate Variance (£):</label>
+                        <input type="number" id="labour-rate-variance" placeholder="Enter amount" step="0.01">
+                        <select id="labour-rate-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="labour-efficiency-variance">Labour Efficiency Variance (£):</label>
+                        <input type="number" id="labour-efficiency-variance" placeholder="Enter amount" step="0.01">
+                        <select id="labour-efficiency-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="submit-section">
+                        <button class="primary-btn" onclick="checkLabourRoom()">Submit Answers</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="labour-efficiency-variance">Labour Efficiency Variance (£):</label>
-                    <input type="number" id="labour-efficiency-variance" placeholder="Enter amount" step="0.01">
-                    <select id="labour-efficiency-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
-                </div>
-                <button class="primary-btn" onclick="checkLabourRoom()">Submit Answers</button>
                 <div id="labour-feedback" class="feedback"></div>
             </div>
         </div>
@@ -232,25 +240,29 @@
 
             <div class="calculation-panel">
                 <h3>Calculate the Variances</h3>
-                <div class="input-group">
-                    <label for="variable-overhead-variance">Variable Overhead Variance (£):</label>
-                    <input type="number" id="variable-overhead-variance" placeholder="Enter amount" step="0.01">
-                    <select id="variable-overhead-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
+                <div class="calculation-grid">
+                    <div class="input-group">
+                        <label for="variable-overhead-variance">Variable Overhead Variance (£):</label>
+                        <input type="number" id="variable-overhead-variance" placeholder="Enter amount" step="0.01">
+                        <select id="variable-overhead-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="fixed-overhead-variance">Fixed Overhead Volume Variance (£):</label>
+                        <input type="number" id="fixed-overhead-variance" placeholder="Enter amount" step="0.01">
+                        <select id="fixed-overhead-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="submit-section">
+                        <button class="primary-btn" onclick="checkOverheadRoom()">Submit Answers</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="fixed-overhead-variance">Fixed Overhead Volume Variance (£):</label>
-                    <input type="number" id="fixed-overhead-variance" placeholder="Enter amount" step="0.01">
-                    <select id="fixed-overhead-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
-                </div>
-                <button class="primary-btn" onclick="checkOverheadRoom()">Submit Answers</button>
                 <div id="overhead-feedback" class="feedback"></div>
             </div>
         </div>
@@ -300,25 +312,29 @@
 
             <div class="calculation-panel">
                 <h3>Calculate the Variances</h3>
-                <div class="input-group">
-                    <label for="sales-price-variance">Sales Price Variance (£):</label>
-                    <input type="number" id="sales-price-variance" placeholder="Enter amount" step="0.01">
-                    <select id="sales-price-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
+                <div class="calculation-grid">
+                    <div class="input-group">
+                        <label for="sales-price-variance">Sales Price Variance (£):</label>
+                        <input type="number" id="sales-price-variance" placeholder="Enter amount" step="0.01">
+                        <select id="sales-price-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sales-volume-variance">Sales Volume Contribution Variance (£):</label>
+                        <input type="number" id="sales-volume-variance" placeholder="Enter amount" step="0.01">
+                        <select id="sales-volume-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="submit-section">
+                        <button class="primary-btn" onclick="checkSalesRoom()">Submit Answers</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="sales-volume-variance">Sales Volume Contribution Variance (£):</label>
-                    <input type="number" id="sales-volume-variance" placeholder="Enter amount" step="0.01">
-                    <select id="sales-volume-variance-type">
-                        <option value="">Select</option>
-                        <option value="adverse">Adverse</option>
-                        <option value="favourable">Favourable</option>
-                    </select>
-                </div>
-                <button class="primary-btn" onclick="checkSalesRoom()">Submit Answers</button>
                 <div id="sales-feedback" class="feedback"></div>
             </div>
         </div>

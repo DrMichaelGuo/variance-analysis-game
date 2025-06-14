@@ -119,9 +119,9 @@ body::before {
 /* Cards with Escape Room Theme */
 .intro-card, .scenario-card, .data-panel, .calculation-panel, .summary-card, .formula-card {
     background: linear-gradient(145deg, var(--steel-gray), var(--dark-bg));
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 30px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
     box-shadow: var(--shadow-dark);
     border: 2px solid var(--vault-gold);
     position: relative;
@@ -292,20 +292,20 @@ body::before {
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
-/* Data Grid */
+/* Data Grid - Compact Layout */
 .data-grid {
     display: grid;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
     margin-top: 1.5rem;
 }
 
 .data-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+    flex-direction: column;
+    padding: 15px;
     background: linear-gradient(135deg, var(--darker-bg), var(--steel-gray));
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid var(--vault-gold);
     transition: all 0.3s ease;
 }
@@ -318,40 +318,50 @@ body::before {
 .data-item .label {
     font-weight: bold;
     color: var(--text-light);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
 }
 
 .data-item .value {
     font-weight: bold;
     color: var(--vault-gold);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
 }
 
-/* Input Groups */
-.input-group {
+/* Calculation Panel - Two Column Layout */
+.calculation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     margin-bottom: 25px;
+}
+
+/* Input Groups - Compact */
+.input-group {
+    margin-bottom: 0;
 }
 
 .input-group label {
     display: block;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: var(--vault-gold);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
 }
 
 .input-group input, .input-group select {
     width: 100%;
-    padding: 15px 18px;
+    padding: 12px 15px;
     border: 2px solid var(--steel-gray);
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 6px;
+    font-size: 1rem;
     background: var(--darker-bg);
     color: var(--text-light);
     transition: all 0.3s ease;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-family: 'Courier New', monospace;
 }
 
@@ -362,66 +372,11 @@ body::before {
     background: var(--dark-bg);
 }
 
-.input-group select {
-    cursor: pointer;
-}
-
-/* Buttons */
-.primary-btn, .secondary-btn {
-    display: inline-block;
-    padding: 18px 40px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
+/* Submit Button - Full Width Below Inputs */
+.submit-section {
+    grid-column: 1 / -1;
     text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s ease;
-    margin: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-}
-
-.primary-btn {
-    background: linear-gradient(135deg, var(--vault-gold), var(--warning-orange));
-    color: var(--darker-bg);
-    box-shadow: var(--shadow-dark);
-}
-
-.primary-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.primary-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
-}
-
-.primary-btn:hover::before {
-    left: 100%;
-}
-
-.secondary-btn {
-    background: transparent;
-    color: var(--vault-gold);
-    border: 2px solid var(--vault-gold);
-}
-
-.secondary-btn:hover {
-    background: var(--vault-gold);
-    color: var(--darker-bg);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-glow);
+    margin-top: 15px;
 }
 
 /* Feedback */
@@ -520,7 +475,7 @@ body::before {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 20px 15px;
+        padding: 15px 10px;
     }
     
     .title {
@@ -531,23 +486,46 @@ body::before {
         font-size: 2.2rem;
     }
     
+    .data-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .calculation-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
     .data-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        padding: 12px;
+    }
+    
+    .data-item .label {
+        font-size: 0.85rem;
     }
     
     .data-item .value {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
     
     .primary-btn, .secondary-btn {
         width: 100%;
-        margin: 10px 0;
+        margin: 8px 0;
+        padding: 15px 30px;
     }
     
     .room-list li {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        padding: 15px;
+    }
+    
+    .variance-skills {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .skill-item {
+        padding: 15px;
     }
 }
 
@@ -557,11 +535,33 @@ body::before {
     }
     
     .intro-card, .scenario-card, .data-panel, .calculation-panel, .summary-card, .formula-card {
-        padding: 20px;
-        margin-bottom: 20px;
+        padding: 15px;
+        margin-bottom: 15px;
     }
     
     .variance-highlight {
-        padding: 25px;
+        padding: 20px;
+    }
+    
+    .variance-skills {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .data-item .label {
+        font-size: 0.8rem;
+    }
+    
+    .data-item .value {
+        font-size: 1rem;
+    }
+    
+    .input-group label {
+        font-size: 0.8rem;
+    }
+    
+    .input-group input, .input-group select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
     }
 }
