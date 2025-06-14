@@ -472,6 +472,138 @@ body::before {
     75% { transform: rotate(-5deg); }
 }
 
+/* Buttons */
+.primary-btn, .secondary-btn {
+    display: inline-block;
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.4s ease;
+    margin: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    box-shadow: var(--shadow-dark);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--vault-gold) 0%, var(--warning-orange) 50%, var(--vault-gold) 100%);
+    color: var(--darker-bg);
+    border: 3px solid var(--vault-gold);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.primary-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.primary-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.6), 0 0 25px rgba(212, 175, 55, 0.4);
+    border-color: var(--warning-orange);
+    background: linear-gradient(135deg, var(--warning-orange) 0%, var(--vault-gold) 50%, var(--warning-orange) 100%);
+}
+
+.primary-btn:hover::before {
+    left: 100%;
+}
+
+.primary-btn:hover::after {
+    opacity: 1;
+}
+
+.primary-btn:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+}
+
+.secondary-btn {
+    background: linear-gradient(135deg, var(--darker-bg), var(--steel-gray));
+    color: var(--vault-gold);
+    border: 3px solid var(--vault-gold);
+    position: relative;
+}
+
+.secondary-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--vault-gold), var(--warning-orange));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.secondary-btn:hover {
+    color: var(--darker-bg);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+    border-color: var(--warning-orange);
+}
+
+.secondary-btn:hover::before {
+    opacity: 1;
+}
+
+/* Special styling for the main entry button */
+.primary-btn:first-of-type {
+    font-size: 1.3rem;
+    padding: 20px 50px;
+    background: linear-gradient(135deg, var(--vault-gold) 0%, #ffd700 25%, var(--warning-orange) 50%, #ffd700 75%, var(--vault-gold) 100%);
+    background-size: 200% 200%;
+    animation: goldShimmer 3s ease-in-out infinite;
+    border: 4px solid var(--vault-gold);
+    box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes goldShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.primary-btn:first-of-type:hover {
+    animation-duration: 1s;
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 
+        0 0 30px rgba(212, 175, 55, 0.8),
+        0 0 50px rgba(255, 215, 0, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.2),
+        0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
