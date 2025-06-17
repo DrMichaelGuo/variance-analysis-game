@@ -99,6 +99,15 @@
                             <option value="favourable">Favourable</option>
                         </select>
                     </div>
+                    <div class="input-group">
+                        <label for="total-material-variance">Total Material Variance (£):</label>
+                        <input type="number" id="total-material-variance" placeholder="Enter amount" step="0.01">
+                        <select id="total-material-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
                     <div class="submit-section">
                         <button class="primary-btn" onclick="checkMaterialsRoom()">Submit Answers</button>
                     </div>
@@ -162,6 +171,15 @@
                         <label for="labour-efficiency-variance">Labour Efficiency Variance (£):</label>
                         <input type="number" id="labour-efficiency-variance" placeholder="Enter amount" step="0.01">
                         <select id="labour-efficiency-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="total-labour-variance">Total Labour Variance (£):</label>
+                        <input type="number" id="total-labour-variance" placeholder="Enter amount" step="0.01">
+                        <select id="total-labour-variance-type">
                             <option value="">Select</option>
                             <option value="adverse">Adverse</option>
                             <option value="favourable">Favourable</option>
@@ -243,6 +261,15 @@
                             <option value="favourable">Favourable</option>
                         </select>
                     </div>
+                    <div class="input-group">
+                        <label for="total-overhead-variance">Total Overhead Variance (£):</label>
+                        <input type="number" id="total-overhead-variance" placeholder="Enter amount" step="0.01">
+                        <select id="total-overhead-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
                     <div class="submit-section">
                         <button class="primary-btn" onclick="checkOverheadRoom()">Submit Answers</button>
                     </div>
@@ -315,6 +342,15 @@
                             <option value="favourable">Favourable</option>
                         </select>
                     </div>
+                    <div class="input-group">
+                        <label for="total-sales-variance">Total Sales Variance (£):</label>
+                        <input type="number" id="total-sales-variance" placeholder="Enter amount" step="0.01">
+                        <select id="total-sales-variance-type">
+                            <option value="">Select</option>
+                            <option value="adverse">Adverse</option>
+                            <option value="favourable">Favourable</option>
+                        </select>
+                    </div>
                     <div class="submit-section">
                         <button class="primary-btn" onclick="checkSalesRoom()">Submit Answers</button>
                     </div>
@@ -336,21 +372,25 @@
                     <h3>🏭 Materials Room</h3>
                     <p><strong>Material Price Variance:</strong> £625.00 Adverse</p>
                     <p><strong>Material Usage Variance:</strong> £400.00 Adverse</p>
+                    <p><strong>Total Material Variance:</strong> £1,025.00 Adverse</p>
                 </div>
                 <div class="summary-section">
                     <h3>👷 Labour Room</h3>
                     <p><strong>Labour Rate Variance:</strong> £680.00 Favourable</p>
                     <p><strong>Labour Efficiency Variance:</strong> £750.00 Adverse</p>
+                    <p><strong>Total Labour Variance:</strong> £70.00 Adverse</p>
                 </div>
                 <div class="summary-section">
                     <h3>⚙️ Overhead Room</h3>
                     <p><strong>Variable Overhead Variance:</strong> £380.00 Adverse</p>
                     <p><strong>Fixed Overhead Volume Variance:</strong> £1,200.00 Adverse</p>
+                    <p><strong>Total Overhead Variance:</strong> £1,580.00 Adverse</p>
                 </div>
                 <div class="summary-section">
                     <h3>📊 Sales Room</h3>
                     <p><strong>Sales Price Variance:</strong> £2,600.00 Adverse</p>
                     <p><strong>Sales Volume Contribution Variance:</strong> £900.00 Favourable</p>
+                    <p><strong>Total Sales Variance:</strong> £1,700.00 Adverse</p>
                 </div>
             </div>
             

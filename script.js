@@ -53,19 +53,23 @@ const calculations = {
 const correctAnswers = {
     materials: {
         priceVariance: { amount: 625, type: 'adverse' },
-        usageVariance: { amount: 400, type: 'adverse' }
+        usageVariance: { amount: 400, type: 'adverse' },
+        totalVariance: { amount: 1025, type: 'adverse' }
     },
     labour: {
         rateVariance: { amount: 680, type: 'favourable' },
-        efficiencyVariance: { amount: 750, type: 'adverse' }
+        efficiencyVariance: { amount: 750, type: 'adverse' },
+        totalVariance: { amount: 70, type: 'adverse' }
     },
     overhead: {
         variableVariance: { amount: 380, type: 'adverse' },
-        fixedVariance: { amount: 1200, type: 'adverse' }
+        fixedVariance: { amount: 1200, type: 'adverse' },
+        totalVariance: { amount: 1580, type: 'adverse' }
     },
     sales: {
         priceVariance: { amount: 2600, type: 'adverse' },
-        volumeVariance: { amount: 900, type: 'favourable' }
+        volumeVariance: { amount: 900, type: 'favourable' },
+        totalVariance: { amount: 1700, type: 'adverse' }
     }
 };
 
@@ -171,11 +175,14 @@ function checkMaterialsRoom() {
     const priceVarianceType = document.getElementById('material-price-variance-type').value;
     const usageVariance = parseFloat(document.getElementById('material-usage-variance').value);
     const usageVarianceType = document.getElementById('material-usage-variance-type').value;
+    const totalVariance = parseFloat(document.getElementById('total-material-variance').value);
+    const totalVarianceType = document.getElementById('total-material-variance-type').value;
     
     // Validate inputs
     const inputs = [
         { value: priceVariance, type: priceVarianceType },
-        { value: usageVariance, type: usageVarianceType }
+        { value: usageVariance, type: usageVarianceType },
+        { value: totalVariance, type: totalVarianceType }
     ];
     
     if (!validateInputs(inputs)) {
@@ -188,10 +195,12 @@ function checkMaterialsRoom() {
                         && priceVarianceType === correctAnswers.materials.priceVariance.type;
     const usageCorrect = Math.abs(usageVariance - correctAnswers.materials.usageVariance.amount) < 0.01 
                         && usageVarianceType === correctAnswers.materials.usageVariance.type;
+    const totalCorrect = Math.abs(totalVariance - correctAnswers.materials.totalVariance.amount) < 0.01 
+                        && totalVarianceType === correctAnswers.materials.totalVariance.type;
     
-    if (priceCorrect && usageCorrect) {
+    if (priceCorrect && usageCorrect && totalCorrect) {
         gameState.completedRooms.push('materials');
-        gameState.answers.materials = { priceVariance, priceVarianceType, usageVariance, usageVarianceType };
+        gameState.answers.materials = { priceVariance, priceVarianceType, usageVariance, usageVarianceType, totalVariance, totalVarianceType };
         showFeedback('materials-feedback', true, '🎉 Correct! The Materials Room is unlocked. Moving to Labour Room...');
         
         setTimeout(() => {
@@ -201,7 +210,8 @@ function checkMaterialsRoom() {
         let errorMessage = 'Incorrect answers. ';
         if (!priceCorrect) errorMessage += 'Check your Material Price Variance calculation. ';
         if (!usageCorrect) errorMessage += 'Check your Material Usage Variance calculation. ';
-        errorMessage += 'Remember: Price Variance = (Actual Price - Standard Price) × Actual Quantity, Usage Variance = (Actual Quantity - Standard Quantity) × Standard Price';
+        if (!totalCorrect) errorMessage += 'Check your Total Material Variance calculation. ';
+        errorMessage += 'Remember: Total Variance = Price Variance + Usage Variance (considering adverse/favourable signs)';
         
         showFeedback('materials-feedback', false, errorMessage);
     }
@@ -212,11 +222,14 @@ function checkLabourRoom() {
     const rateVarianceType = document.getElementById('labour-rate-variance-type').value;
     const efficiencyVariance = parseFloat(document.getElementById('labour-efficiency-variance').value);
     const efficiencyVarianceType = document.getElementById('labour-efficiency-variance-type').value;
+    const totalVariance = parseFloat(document.getElementById('total-labour-variance').value);
+    const totalVarianceType = document.getElementById('total-labour-variance-type').value;
     
     // Validate inputs
     const inputs = [
         { value: rateVariance, type: rateVarianceType },
-        { value: efficiencyVariance, type: efficiencyVarianceType }
+        { value: efficiencyVariance, type: efficiencyVarianceType },
+        { value: totalVariance, type: totalVarianceType }
     ];
     
     if (!validateInputs(inputs)) {
@@ -229,10 +242,12 @@ function checkLabourRoom() {
                        && rateVarianceType === correctAnswers.labour.rateVariance.type;
     const efficiencyCorrect = Math.abs(efficiencyVariance - correctAnswers.labour.efficiencyVariance.amount) < 0.01 
                              && efficiencyVarianceType === correctAnswers.labour.efficiencyVariance.type;
+    const totalCorrect = Math.abs(totalVariance - correctAnswers.labour.totalVariance.amount) < 0.01 
+                        && totalVarianceType === correctAnswers.labour.totalVariance.type;
     
-    if (rateCorrect && efficiencyCorrect) {
+    if (rateCorrect && efficiencyCorrect && totalCorrect) {
         gameState.completedRooms.push('labour');
-        gameState.answers.labour = { rateVariance, rateVarianceType, efficiencyVariance, efficiencyVarianceType };
+        gameState.answers.labour = { rateVariance, rateVarianceType, efficiencyVariance, efficiencyVarianceType, totalVariance, totalVarianceType };
         showFeedback('labour-feedback', true, '🎉 Correct! The Labour Room is unlocked. Moving to Overhead Room...');
         
         setTimeout(() => {
@@ -242,7 +257,8 @@ function checkLabourRoom() {
         let errorMessage = 'Incorrect answers. ';
         if (!rateCorrect) errorMessage += 'Check your Labour Rate Variance calculation. ';
         if (!efficiencyCorrect) errorMessage += 'Check your Labour Efficiency Variance calculation. ';
-        errorMessage += 'Remember: Rate Variance = (Actual Rate - Standard Rate) × Actual Hours, Efficiency Variance = (Actual Hours - Standard Hours) × Standard Rate';
+        if (!totalCorrect) errorMessage += 'Check your Total Labour Variance calculation. ';
+        errorMessage += 'Remember: Total Variance = Rate Variance - Efficiency Variance (considering adverse/favourable signs)';
         
         showFeedback('labour-feedback', false, errorMessage);
     }
@@ -253,11 +269,14 @@ function checkOverheadRoom() {
     const variableVarianceType = document.getElementById('variable-overhead-variance-type').value;
     const fixedVariance = parseFloat(document.getElementById('fixed-overhead-variance').value);
     const fixedVarianceType = document.getElementById('fixed-overhead-variance-type').value;
+    const totalVariance = parseFloat(document.getElementById('total-overhead-variance').value);
+    const totalVarianceType = document.getElementById('total-overhead-variance-type').value;
     
     // Validate inputs
     const inputs = [
         { value: variableVariance, type: variableVarianceType },
-        { value: fixedVariance, type: fixedVarianceType }
+        { value: fixedVariance, type: fixedVarianceType },
+        { value: totalVariance, type: totalVarianceType }
     ];
     
     if (!validateInputs(inputs)) {
@@ -270,10 +289,12 @@ function checkOverheadRoom() {
                            && variableVarianceType === correctAnswers.overhead.variableVariance.type;
     const fixedCorrect = Math.abs(fixedVariance - correctAnswers.overhead.fixedVariance.amount) < 0.01 
                         && fixedVarianceType === correctAnswers.overhead.fixedVariance.type;
+    const totalCorrect = Math.abs(totalVariance - correctAnswers.overhead.totalVariance.amount) < 0.01 
+                        && totalVarianceType === correctAnswers.overhead.totalVariance.type;
     
-    if (variableCorrect && fixedCorrect) {
+    if (variableCorrect && fixedCorrect && totalCorrect) {
         gameState.completedRooms.push('overhead');
-        gameState.answers.overhead = { variableVariance, variableVarianceType, fixedVariance, fixedVarianceType };
+        gameState.answers.overhead = { variableVariance, variableVarianceType, fixedVariance, fixedVarianceType, totalVariance, totalVarianceType };
         showFeedback('overhead-feedback', true, '🎉 Correct! The Overhead Room is unlocked. Moving to Sales Room...');
         
         setTimeout(() => {
@@ -283,7 +304,8 @@ function checkOverheadRoom() {
         let errorMessage = 'Incorrect answers. ';
         if (!variableCorrect) errorMessage += 'Check your Variable Overhead Variance calculation. ';
         if (!fixedCorrect) errorMessage += 'Check your Fixed Overhead Volume Variance calculation. ';
-        errorMessage += 'Hint: Calculate the fixed overhead absorption rate first (£24,000 ÷ 2,000 hours = £12 per hour)';
+        if (!totalCorrect) errorMessage += 'Check your Total Overhead Variance calculation. ';
+        errorMessage += 'Remember: Total Variance = Variable Variance + Fixed Variance (considering adverse/favourable signs)';
         
         showFeedback('overhead-feedback', false, errorMessage);
     }
@@ -294,11 +316,14 @@ function checkSalesRoom() {
     const priceVarianceType = document.getElementById('sales-price-variance-type').value;
     const volumeVariance = parseFloat(document.getElementById('sales-volume-variance').value);
     const volumeVarianceType = document.getElementById('sales-volume-variance-type').value;
+    const totalVariance = parseFloat(document.getElementById('total-sales-variance').value);
+    const totalVarianceType = document.getElementById('total-sales-variance-type').value;
     
     // Validate inputs
     const inputs = [
         { value: priceVariance, type: priceVarianceType },
-        { value: volumeVariance, type: volumeVarianceType }
+        { value: volumeVariance, type: volumeVarianceType },
+        { value: totalVariance, type: totalVarianceType }
     ];
     
     if (!validateInputs(inputs)) {
@@ -311,10 +336,12 @@ function checkSalesRoom() {
                         && priceVarianceType === correctAnswers.sales.priceVariance.type;
     const volumeCorrect = Math.abs(volumeVariance - correctAnswers.sales.volumeVariance.amount) < 0.01 
                          && volumeVarianceType === correctAnswers.sales.volumeVariance.type;
+    const totalCorrect = Math.abs(totalVariance - correctAnswers.sales.totalVariance.amount) < 0.01 
+                        && totalVarianceType === correctAnswers.sales.totalVariance.type;
     
-    if (priceCorrect && volumeCorrect) {
+    if (priceCorrect && volumeCorrect && totalCorrect) {
         gameState.completedRooms.push('sales');
-        gameState.answers.sales = { priceVariance, priceVarianceType, volumeVariance, volumeVarianceType };
+        gameState.answers.sales = { priceVariance, priceVarianceType, volumeVariance, volumeVarianceType, totalVariance, totalVarianceType };
         showFeedback('sales-feedback', true, '🎉 Congratulations! You have escaped the Variance Vault! Redirecting to completion screen...');
         
         setTimeout(() => {
@@ -324,7 +351,8 @@ function checkSalesRoom() {
         let errorMessage = 'Incorrect answers. ';
         if (!priceCorrect) errorMessage += 'Check your Sales Price Variance calculation. ';
         if (!volumeCorrect) errorMessage += 'Check your Sales Volume Contribution Variance calculation. ';
-        errorMessage += 'Remember: Sales Price Variance = (Actual Price - Standard Price) × Actual Volume, Sales Volume Variance = (Actual Volume - Budgeted Volume) × Standard Contribution';
+        if (!totalCorrect) errorMessage += 'Check your Total Sales Variance calculation. ';
+        errorMessage += 'Remember: Total Variance = Price Variance + Volume Variance (considering adverse/favourable signs)';
         
         showFeedback('sales-feedback', false, errorMessage);
     }
@@ -340,28 +368,36 @@ document.addEventListener('DOMContentLoaded', function() {
         'material-price-variance', 
         'material-price-variance-type', 
         'material-usage-variance', 
-        'material-usage-variance-type'
+        'material-usage-variance-type',
+        'total-material-variance',
+        'total-material-variance-type'
     ], 'materials-feedback');
     
     addFeedbackListeners([
         'labour-rate-variance', 
         'labour-rate-variance-type', 
         'labour-efficiency-variance', 
-        'labour-efficiency-variance-type'
+        'labour-efficiency-variance-type',
+        'total-labour-variance',
+        'total-labour-variance-type'
     ], 'labour-feedback');
     
     addFeedbackListeners([
         'variable-overhead-variance', 
         'variable-overhead-variance-type', 
         'fixed-overhead-variance', 
-        'fixed-overhead-variance-type'
+        'fixed-overhead-variance-type',
+        'total-overhead-variance',
+        'total-overhead-variance-type'
     ], 'overhead-feedback');
     
     addFeedbackListeners([
         'sales-price-variance', 
         'sales-price-variance-type', 
         'sales-volume-variance', 
-        'sales-volume-variance-type'
+        'sales-volume-variance-type',
+        'total-sales-variance',
+        'total-sales-variance-type'
     ], 'sales-feedback');
     
     // Add keyboard support for Enter key
