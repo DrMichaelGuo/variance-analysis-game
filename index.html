@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Fixed Timer Display -->
+    <div id="timer-display" class="timer-display">
+        <div class="timer-content">
+            <span id="timer-text">Time: 00:00</span>
+            <span id="room-indicator">Welcome</span>
+        </div>
+    </div>
+
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen active">
         <div class="container">
@@ -391,6 +399,16 @@
                     <p><strong>Sales Price Variance:</strong> £2,600.00 Adverse</p>
                     <p><strong>Sales Volume Contribution Variance:</strong> £900.00 Favourable</p>
                     <p><strong>Total Sales Variance:</strong> £1,700.00 Adverse</p>
+                </div>
+            </div>
+
+            <div class="time-summary-card">
+                <h2>⏱️ Time Performance</h2>
+                <div id="time-breakdown" class="time-breakdown">
+                    <!-- Time data will be populated by JavaScript -->
+                </div>
+                <div class="total-time-section">
+                    <h3>🏆 Total Game Time: <span id="total-time-display">--:--</span></h3>
                 </div>
             </div>
             

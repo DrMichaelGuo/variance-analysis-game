@@ -2,8 +2,104 @@
 let gameState = {
     currentRoom: 'welcome',
     completedRooms: [],
-    answers: {}
+    answers: {},
+    roomTimes: {},
+    gameStartTime: null,
+    currentRoomStartTime: null,
+    totalGameTime: 0
 };
+
+// Timer variables
+let timerInterval = null;
+let currentTime = 0;
+
+// Timer functions
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    
+    currentTime = 0;
+    gameState.gameStartTime = Date.now();
+    gameState.currentRoomStartTime = Date.now();
+    
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimerDisplay();
+}
+
+function updateTimer() {
+    currentTime++;
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = currentTime % 60;
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    const timerText = document.getElementById('timer-text');
+    const roomIndicator = document.getElementById('room-indicator');
+    
+    if (timerText) {
+        timerText.textContent = `Time: ${timeString}`;
+    }
+    
+    if (roomIndicator) {
+        const roomNames = {
+            'welcome-screen': 'Welcome',
+            'materials-room': 'Materials',
+            'labour-room': 'Labour',
+            'overhead-room': 'Overhead',
+            'sales-room': 'Sales',
+            'completion-screen': 'Complete',
+            'formula-screen': 'Formulas'
+        };
+        roomIndicator.textContent = roomNames[gameState.currentRoom] || 'Game';
+    }
+}
+
+function recordRoomTime(roomId) {
+    if (gameState.currentRoomStartTime) {
+        const timeSpent = Math.floor((Date.now() - gameState.currentRoomStartTime) / 1000);
+        
+        // Map screen IDs to room names
+        const roomMapping = {
+            'materials-room': 'Materials',
+            'labour-room': 'Labour',
+            'overhead-room': 'Overhead',
+            'sales-room': 'Sales'
+        };
+        
+        const roomName = roomMapping[gameState.currentRoom];
+        if (roomName) {
+            gameState.roomTimes[roomName] = timeSpent;
+        }
+    }
+    
+    // Set new room start time
+    gameState.currentRoomStartTime = Date.now();
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
+    // Record final room time
+    recordRoomTime(gameState.currentRoom);
+    
+    // Calculate total game time
+    if (gameState.gameStartTime) {
+        gameState.totalGameTime = Math.floor((Date.now() - gameState.gameStartTime) / 1000);
+    }
+}
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
 
 // Variance calculation functions
 const calculations = {
@@ -75,11 +171,25 @@ const correctAnswers = {
 
 // Utility functions
 function showScreen(screenId) {
+    // Record time for previous room before switching
+    if (gameState.currentRoom && gameState.currentRoom !== screenId) {
+        recordRoomTime(gameState.currentRoom);
+    }
+    
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
     gameState.currentRoom = screenId;
+    
+    // Update timer display
+    updateTimerDisplay();
+    
+    // If showing completion screen, stop timer and display results
+    if (screenId === 'completion-screen') {
+        stopTimer();
+        displayTimeResults();
+    }
     
     // Scroll to top of page when changing screens
     window.scrollTo({
@@ -89,17 +199,92 @@ function showScreen(screenId) {
     });
 }
 
+function displayTimeResults() {
+    const timeBreakdown = document.getElementById('time-breakdown');
+    const totalTimeDisplay = document.getElementById('total-time-display');
+    
+    if (!timeBreakdown || !totalTimeDisplay) return;
+    
+    // Clear existing content
+    timeBreakdown.innerHTML = '';
+    
+    // Display individual room times
+    const roomOrder = ['Materials', 'Labour', 'Overhead', 'Sales'];
+    const roomIcons = {
+        'Materials': '🏭',
+        'Labour': '👷',
+        'Overhead': '⚙️',
+        'Sales': '📊'
+    };
+    
+    roomOrder.forEach(roomName => {
+        const timeSpent = gameState.roomTimes[roomName] || 0;
+        const timeItem = document.createElement('div');
+        timeItem.className = 'time-item';
+        timeItem.innerHTML = `
+            <div class="room-name">${roomIcons[roomName]} ${roomName} Room</div>
+            <div class="time-value">${formatTime(timeSpent)}</div>
+        `;
+        timeBreakdown.appendChild(timeItem);
+    });
+    
+    // Display total time
+    totalTimeDisplay.textContent = formatTime(gameState.totalGameTime);
+}
+
+// Game flow functions
+function startGame() {
+    startTimer();
+    showScreen('materials-room');
+}
+
+function restartGame() {
+    // Stop any running timer
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
+    gameState = {
+        currentRoom: 'welcome',
+        completedRooms: [],
+        answers: {},
+        roomTimes: {},
+        gameStartTime: null,
+        currentRoomStartTime: null,
+        totalGameTime: 0
+    };
+    
+    currentTime = 0;
+    
+    // Clear all inputs
+    document.querySelectorAll('input, select').forEach(element => {
+        element.value = '';
+    });
+    
+    // Hide all feedback
+    document.querySelectorAll('.feedback').forEach(feedback => {
+        feedback.style.display = 'none';
+    });
+    
+    showScreen('welcome-screen');
+}
+
+function showFormulas() {
+    showScreen('formula-screen');
+}
+
+function hideFormulas() {
+    showScreen('completion-screen');
+}
+
 function showFeedback(elementId, isCorrect, message) {
     const feedbackElement = document.getElementById(elementId);
     feedbackElement.className = `feedback ${isCorrect ? 'success' : 'error'}`;
     feedbackElement.textContent = message;
     feedbackElement.style.display = 'block';
-    
-    // Keep success feedback visible, but don't auto-hide error feedback anymore
-    // Error feedback will be hidden when user starts typing
 }
 
-// Function to hide feedback when user starts typing
 function hideFeedbackOnInput(feedbackId) {
     const feedbackElement = document.getElementById(feedbackId);
     if (feedbackElement && feedbackElement.classList.contains('error')) {
@@ -107,7 +292,6 @@ function hideFeedbackOnInput(feedbackId) {
     }
 }
 
-// Function to add input listeners for hiding feedback
 function addFeedbackListeners(roomInputs, feedbackId) {
     roomInputs.forEach(inputId => {
         const inputElement = document.getElementById(inputId);
@@ -136,39 +320,6 @@ function clearInputs(inputIds) {
     });
 }
 
-// Game flow functions
-function startGame() {
-    showScreen('materials-room');
-}
-
-function restartGame() {
-    gameState = {
-        currentRoom: 'welcome',
-        completedRooms: [],
-        answers: {}
-    };
-    
-    // Clear all inputs
-    document.querySelectorAll('input, select').forEach(element => {
-        element.value = '';
-    });
-    
-    // Hide all feedback
-    document.querySelectorAll('.feedback').forEach(feedback => {
-        feedback.style.display = 'none';
-    });
-    
-    showScreen('welcome-screen');
-}
-
-function showFormulas() {
-    showScreen('formula-screen');
-}
-
-function hideFormulas() {
-    showScreen('completion-screen');
-}
-
 // Room checking functions
 function checkMaterialsRoom() {
     const priceVariance = parseFloat(document.getElementById('material-price-variance').value);
@@ -178,7 +329,6 @@ function checkMaterialsRoom() {
     const totalVariance = parseFloat(document.getElementById('total-material-variance').value);
     const totalVarianceType = document.getElementById('total-material-variance-type').value;
     
-    // Validate inputs
     const inputs = [
         { value: priceVariance, type: priceVarianceType },
         { value: usageVariance, type: usageVarianceType },
@@ -190,7 +340,6 @@ function checkMaterialsRoom() {
         return;
     }
     
-    // Check answers
     const priceCorrect = Math.abs(priceVariance - correctAnswers.materials.priceVariance.amount) < 0.01 
                         && priceVarianceType === correctAnswers.materials.priceVariance.type;
     const usageCorrect = Math.abs(usageVariance - correctAnswers.materials.usageVariance.amount) < 0.01 
@@ -225,7 +374,6 @@ function checkLabourRoom() {
     const totalVariance = parseFloat(document.getElementById('total-labour-variance').value);
     const totalVarianceType = document.getElementById('total-labour-variance-type').value;
     
-    // Validate inputs
     const inputs = [
         { value: rateVariance, type: rateVarianceType },
         { value: efficiencyVariance, type: efficiencyVarianceType },
@@ -237,7 +385,6 @@ function checkLabourRoom() {
         return;
     }
     
-    // Check answers
     const rateCorrect = Math.abs(rateVariance - correctAnswers.labour.rateVariance.amount) < 0.01 
                        && rateVarianceType === correctAnswers.labour.rateVariance.type;
     const efficiencyCorrect = Math.abs(efficiencyVariance - correctAnswers.labour.efficiencyVariance.amount) < 0.01 
@@ -272,7 +419,6 @@ function checkOverheadRoom() {
     const totalVariance = parseFloat(document.getElementById('total-overhead-variance').value);
     const totalVarianceType = document.getElementById('total-overhead-variance-type').value;
     
-    // Validate inputs
     const inputs = [
         { value: variableVariance, type: variableVarianceType },
         { value: fixedVariance, type: fixedVarianceType },
@@ -284,7 +430,6 @@ function checkOverheadRoom() {
         return;
     }
     
-    // Check answers
     const variableCorrect = Math.abs(variableVariance - correctAnswers.overhead.variableVariance.amount) < 0.01 
                            && variableVarianceType === correctAnswers.overhead.variableVariance.type;
     const fixedCorrect = Math.abs(fixedVariance - correctAnswers.overhead.fixedVariance.amount) < 0.01 
@@ -319,7 +464,6 @@ function checkSalesRoom() {
     const totalVariance = parseFloat(document.getElementById('total-sales-variance').value);
     const totalVarianceType = document.getElementById('total-sales-variance-type').value;
     
-    // Validate inputs
     const inputs = [
         { value: priceVariance, type: priceVarianceType },
         { value: volumeVariance, type: volumeVarianceType },
@@ -331,7 +475,6 @@ function checkSalesRoom() {
         return;
     }
     
-    // Check answers
     const priceCorrect = Math.abs(priceVariance - correctAnswers.sales.priceVariance.amount) < 0.01 
                         && priceVarianceType === correctAnswers.sales.priceVariance.type;
     const volumeCorrect = Math.abs(volumeVariance - correctAnswers.sales.volumeVariance.amount) < 0.01 
@@ -360,47 +503,32 @@ function checkSalesRoom() {
 
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Set initial screen
     showScreen('welcome-screen');
     
-    // Set up feedback listeners for each room
     addFeedbackListeners([
-        'material-price-variance', 
-        'material-price-variance-type', 
-        'material-usage-variance', 
-        'material-usage-variance-type',
-        'total-material-variance',
-        'total-material-variance-type'
+        'material-price-variance', 'material-price-variance-type', 
+        'material-usage-variance', 'material-usage-variance-type',
+        'total-material-variance', 'total-material-variance-type'
     ], 'materials-feedback');
     
     addFeedbackListeners([
-        'labour-rate-variance', 
-        'labour-rate-variance-type', 
-        'labour-efficiency-variance', 
-        'labour-efficiency-variance-type',
-        'total-labour-variance',
-        'total-labour-variance-type'
+        'labour-rate-variance', 'labour-rate-variance-type', 
+        'labour-efficiency-variance', 'labour-efficiency-variance-type',
+        'total-labour-variance', 'total-labour-variance-type'
     ], 'labour-feedback');
     
     addFeedbackListeners([
-        'variable-overhead-variance', 
-        'variable-overhead-variance-type', 
-        'fixed-overhead-variance', 
-        'fixed-overhead-variance-type',
-        'total-overhead-variance',
-        'total-overhead-variance-type'
+        'variable-overhead-variance', 'variable-overhead-variance-type', 
+        'fixed-overhead-variance', 'fixed-overhead-variance-type',
+        'total-overhead-variance', 'total-overhead-variance-type'
     ], 'overhead-feedback');
     
     addFeedbackListeners([
-        'sales-price-variance', 
-        'sales-price-variance-type', 
-        'sales-volume-variance', 
-        'sales-volume-variance-type',
-        'total-sales-variance',
-        'total-sales-variance-type'
+        'sales-price-variance', 'sales-price-variance-type', 
+        'sales-volume-variance', 'sales-volume-variance-type',
+        'total-sales-variance', 'total-sales-variance-type'
     ], 'sales-feedback');
     
-    // Add keyboard support for Enter key
     document.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             const currentScreen = document.querySelector('.screen.active');
@@ -411,7 +539,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Add input validation feedback
     document.querySelectorAll('input[type="number"]').forEach(input => {
         input.addEventListener('input', function() {
             if (this.value < 0) {
@@ -422,6 +549,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    console.log('🔐 Escape the Variance Vault - Game initialized!');
+    console.log('🔐 Escape the Variance Vault - Game initialized with timer!');
     console.log('Debug mode - Correct answers:', correctAnswers);
 });
